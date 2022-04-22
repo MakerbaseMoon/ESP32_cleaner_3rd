@@ -11,8 +11,10 @@ void setup() {
 
 void loop() {
     digitalWrite(led, HIGH);
+    Serial.printf("LED ON\n");
     delay(1000);
 
     digitalWrite(led, LOW);
+    Serial.printf("LED OFF\n");
     delay(1000);
 }

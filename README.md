@@ -9,7 +9,7 @@ This is the cleaner project for maker.
 ## git command (git 指令)
 
 ```
-git clone https://github.com/Hsun1031/ESP32_cleaner.git
+git clone https://github.com/Hsun1031/ESP32_cleaner_3rd.git
 git submodule init
 ``` 
 

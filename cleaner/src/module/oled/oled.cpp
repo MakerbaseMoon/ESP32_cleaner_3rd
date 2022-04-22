@@ -407,7 +407,7 @@ const unsigned char IMAGE_AUTO [] PROGMEM = {
 };
 
 bool oled_setup(Adafruit_SSD1306* display) {
-    if (!display->begin(SSD1306_SWITCHCAPVCC, OLED_ADDRESS)){
+    if(!display->begin(SSD1306_SWITCHCAPVCC, OLED_ADDRESS)) {
         #ifdef ESP32_CLEANER_SHOW_DEBUG
         Serial.printf("[Failed] SSD1306 OLED begin Error.\n");
         #endif

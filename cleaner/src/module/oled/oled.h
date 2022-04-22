@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <Adafruit_SSD1306.h>
 #include <Adafruit_I2CDevice.h>
 
