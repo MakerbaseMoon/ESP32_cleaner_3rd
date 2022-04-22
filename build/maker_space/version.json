@@ -1,0 +1,10 @@
+{
+    "firmware": {
+        "version": "0",
+        "url": "https://raw.githubusercontent.com/Hsun1031/ESP32_cleaner_3rd/master/maker_space/build/firmware.bin"
+    },
+    "spiffs": {
+        "version": "0",
+        "url": "https://raw.githubusercontent.com/Hsun1031/ESP32_cleaner_3rd/master/maker_space/build/spiffs.bin"
+    }
+}
