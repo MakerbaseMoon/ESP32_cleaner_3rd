@@ -1,0 +1,18 @@
+[submodule "cleaner/lib/ESP32GithubOTA"]
+	path = cleaner/lib/ESP32GithubOTA
+	url = https://github.com/Hsun1031/ESP32GithubOTA.git
+[submodule "cleaner/lib/Adafruit_BusIO"]
+	path = cleaner/lib/Adafruit_BusIO
+	url = https://github.com/adafruit/Adafruit_BusIO
+[submodule "cleaner/lib/Adafruit_SSD1306"]
+	path = cleaner/lib/Adafruit_SSD1306
+	url = https://github.com/adafruit/Adafruit_SSD1306
+[submodule "cleaner/lib/Adafruit-GFX-Library"]
+	path = cleaner/lib/Adafruit-GFX-Library
+	url = https://github.com/adafruit/Adafruit-GFX-Library
+[submodule "cleaner/lib/AsyncTCP"]
+	path = cleaner/lib/AsyncTCP
+	url = https://github.com/me-no-dev/AsyncTCP
+[submodule "cleaner/lib/ESPAsyncWebServer"]
+	path = cleaner/lib/ESPAsyncWebServer
+	url = https://github.com/me-no-dev/ESPAsyncWebServer
