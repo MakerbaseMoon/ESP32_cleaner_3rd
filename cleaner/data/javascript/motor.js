@@ -36,5 +36,15 @@ function init_motor_button() {
             console.log(`motorBt${i} click.`);
             websocket.send(0);
         });
+
+        document.getElementById(`motorBt${i}`).addEventListener('touchstart', () => {
+            console.log(`motorBt${i} click.`);
+            websocket.send(i);
+        });
+
+        document.getElementById(`motorBt${i}`).addEventListener('touchend', () => {
+            console.log(`motorBt${i} click.`);
+            websocket.send(0);
+        });
     }
 }
