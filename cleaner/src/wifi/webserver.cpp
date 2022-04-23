@@ -145,6 +145,10 @@ void server_on_http(AsyncWebServer* server) {
     server->on("/favicon.ico", HTTP_GET, [](AsyncWebServerRequest *request) {
         request->send(SPIFFS, "/image/favicon.jpg", "image/jpg");
     });
+
+    server->on("/background", HTTP_GET, [](AsyncWebServerRequest *request) {
+        request->send(SPIFFS, "/image/background.jpg", "image/jpg");
+    });
 }
 
 int set_server_post_eeprom_data(AsyncWebServerRequest *request) {

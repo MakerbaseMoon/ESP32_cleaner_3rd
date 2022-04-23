@@ -1,5 +1,5 @@
 body {
-    background-image:url("https://images.pexels.com/photos/2082093/pexels-photo-2082093.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1080&w=1920");
+    background-image:url("/background");
     background-repeat: no-repeat;
     background-color: rgba(255,255,204,0.9);
     width: 100vw;
@@ -17,17 +17,9 @@ body {
     }
 }
 
-@media screen and (max-width: 992px) {
-    body {
-        background-image:url("https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1080&w=1920");
-        
-    }
-}
-
 .retate_svg {
     animation: rotation 3s infinite linear;
 }
-
 
 .retate_svg_small {
     animation: rotation 3s infinite linear;
