@@ -42,7 +42,7 @@ void setup() {
 void loop() {
     switch (mode) {
         case 0:
-            auto_mode   (&display, &wifi_mode, esp_ip_address, esp_mdns);
+            auto_mode   (&display, &wifi_mode, esp_ip_address, esp_mdns, &mode);
             break;
 
         case 1:

@@ -7,7 +7,7 @@
 #include "module/oled/oled.h"
 
 void auto_begin();
-void auto_mode(Adafruit_SSD1306* _display, int *wifi_mode, const char* esp_ip_address, const char* esp_mdns);
+void auto_mode(Adafruit_SSD1306* _display, int *wifi_mode, const char* esp_ip_address, const char* esp_mdns, int* mode);
 
 void stop_mode();
 
