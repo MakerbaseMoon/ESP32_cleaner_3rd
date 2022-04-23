@@ -10,6 +10,8 @@ const last_ver_span  = document.getElementById("last_ver_span");
 
 const update_link    = document.getElementById("update_link");
 
+const setting        = document.getElementById("setting")
+
 let mode = 0;
 
 function onLoad() {
@@ -55,10 +57,13 @@ function change_mode() {
             document.getElementById(`motorBt${i}`).disabled = false;
         }
         mode = 1;
-    } else if(mode == 1) {
+    } else if(mode == 1) {;
         console.log("[Mode] Control -> Auto");
         card_div.innerHTML = "";
-        card_div.appendChild(getAutoIcon(300, 300));
+        let auto_svg =  getAutoIcon(300, 300);
+        auto_svg.classList.add("retate_svg");
+        card_div.appendChild(auto_svg);
+
         modeBt.innerHTML = "";
         modeBt.appendChild(getControllerIcon(60, 60));
         mode_span.innerText = "Auto";
