@@ -130,6 +130,10 @@ void server_on_http(AsyncWebServer* server) {
         request->send(SPIFFS, "/javascript/motor.js", "text/javascript");
     });
 
+    server->on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request) {
+        request->send(SPIFFS, "/css/style.css");
+    });
+
     server->on("/bootstrap.css", HTTP_GET, [](AsyncWebServerRequest *request) {
         request->send(SPIFFS, "/bootstrap/bootstrap.css");
     });
