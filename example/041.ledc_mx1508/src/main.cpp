@@ -10,8 +10,8 @@
 #define MOTOR_CHANNEL_3 0x03
 #define MOTOR_CHANNEL_4 0x04
 
-#define MOTOR_FREQ        5000
-#define MOTOR_RESOLUTION     8
+#define MOTOR_FREQ 5000
+#define MOTOR_RESOLUTION 8
 
 void setup() {
     Serial.begin(115200);
