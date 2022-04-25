@@ -20,7 +20,7 @@ AsyncWebSocket ws     ("/ws"); // create WebSocket Object.
 
 void setup() {
     Serial.begin (115200); // Sets the data rate in bits per second (baud) for serial data transmission.
-    Serial.printf("\n\n"); // Newline.
+    Serial.printf("\n123456789\n"); // Newline.
 
     oled_setup  (&display);                  // SSD1306 OLED setup.
     eeprom_setup(&ssid, &passwd, &esp_mdns); // ESP32 EEPROM setup.
