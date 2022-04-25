@@ -4,7 +4,7 @@ void check_cleaner_spiffs_version(int *wifi_mode, Adafruit_SSD1306 *display) {
     if(!(*wifi_mode))
         return;
     
-    if(!get_SPIFFS_update()) {
+    if(get_SPIFFS_update()) { // return 0 -> allready Update. else will Update
         showUpdate(display, NULL, NULL);
         #ifdef ESP32_CLEANER_SHOW_DEBUG
         Serial.printf("[Update] ESP32 will Update New Spiffs version: %s\n", ESP32_CLEANER_VERSION);
