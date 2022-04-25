@@ -29,7 +29,7 @@ function onLoad() {
     // init_ap_form();
     // init_token_form();
     // document.getElementById("mdnsBt").addEventListener('click', esp32_mdns_update);
-    get_github_json_url();
+
     initWebSocket();
 }
 
@@ -149,88 +149,5 @@ function set_div() {
         col3.classList = [];
         col1.classList.add("col-3");
         col3.classList.add("col-3");
-    }
-}
-
-function get_github_json_url() {
-    var request = new XMLHttpRequest();
-    request.open("POST", `${window.location.origin}/get/githubjson`, true);
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.send();
-    request.addEventListener("load", () => {
-        let url = request.responseText;
-        get_github_json_data(url) 
-        console.log(`GitHub Json Url: ${url}`);
-    });
-}
-
-function get_github_json_data(url) {
-    var request = new XMLHttpRequest();
-    request.open("GET", url, true);
-    request.setRequestHeader("Accept", "application/vnd.github.v3+json");
-    request.send();
-    request.addEventListener("load", () => {
-        let data = request.responseText;
-        console.log(data);
-        let last_ver = undefined;
-        try {
-            last_ver = JSON.parse(data)["tag_name"];
-        } catch(e) {
-            last_ver = undefined;
-            console.log("json error:", e);
-        }
-        get_esp_version(last_ver);
-        get_bin_url(JSON.parse(data));
-    });
-}
-
-function get_esp_version(last_ver) {
-    var request = new XMLHttpRequest();
-    request.open("POST", `${window.location.origin}/get/version`, true);
-    request.send();
-    request.addEventListener("load", () => {
-        let now_ver = request.responseText;
-        now_ver_span.innerText = now_ver;
-        if(last_ver === undefined) {
-            last_ver_span.innerText = "NULL";
-            document.getElementById('firmwareBt').disabled = true;
-            document.getElementById('d_firmwareBt').disabled = true;
-            now_ver_span.style.color = "gray";
-            last_ver_span.style.color = "gray";
-        } else {
-            last_ver_span.innerText = last_ver;
-            if(last_ver === now_ver) {
-                now_ver_span.style.color = "gray";
-                last_ver_span.style.color = "gray";
-                document.getElementById('d_firmwareBt').disabled = true;
-            } else {
-                now_ver_span.style.color = "orange";
-                last_ver_span.style.color = "red";
-                update_link.style.color = "red";
-            }
-        }
-    });
-}
-
-function get_bin_url(data) {
-    try {
-        let assets_list = data.assets;
-        let spiffs_bin_url = undefined;
-        let firmware_bin_url = undefined;
-
-        for(let i = 0; i < assets_list.length; i++) {
-            if(assets_list[i].name === "firmware.bin") {
-                firmware_bin_url = assets_list[i].browser_download_url;
-            }
-
-            if(assets_list[i].name === "spiffs.bin") {
-                spiffs_bin_url = assets_list[i].browser_download_url;
-            }
-        }
-        
-        console.log("firmware bin url:", firmware_bin_url);
-        console.log("spiffs bin url:", spiffs_bin_url);
-    }catch(e) {
-        console.log("error:", e)
     }
 }

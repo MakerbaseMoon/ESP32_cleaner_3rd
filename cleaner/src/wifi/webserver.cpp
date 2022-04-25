@@ -47,10 +47,6 @@ void initWebServer(AsyncWebServer* server, int *mode, char** url, char* ssid) {
         request->send(200, "text/plain", GITHUB_VERSION_JSON_URL);
     });
 
-    server->on("/get/firmware", HTTP_POST, [](AsyncWebServerRequest *request) {
-        request->send(200, "text/plain", GITHUB_FIRMWARE_BIN_URL);
-    });
-
     server->on("/ota/update", HTTP_POST, [](AsyncWebServerRequest *request) {
         stop_mode();
         server_set_update(request);
@@ -247,8 +243,8 @@ void server_set_update(AsyncWebServerRequest *request) {
     int name  = (int)*(request->getParam(0)->name(). c_str()) - 48;
   
     if(name == 4) {
-        server_get_url(GITHUB_FIRMWARE_BIN_URL);
-        name = 2;
+        // server_get_url(GITHUB_FIRMWARE_BIN_URL);
+        // name = 2;
     } else {
         server_get_url(request->getParam(0)->value().c_str());
     }

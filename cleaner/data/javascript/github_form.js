@@ -18,8 +18,9 @@ function init_firmware_form() {
     const firmware_help     = document.getElementById("firmware_help" );
     const firmwareBt        = document.getElementById("firmwareBt"    );
 
-    esp32_ota_update_url(firmware_input);
     firmware_help.innerText = "GitHub Firmware URL.\n https://raw.githubusercontent.com/<name>/<repo>/<branch>/<file path>/<file name>";
+
+    get_github_json_url();
 
     firmwareBt.addEventListener('click', () => {
         if(firmware_input.value == "")
@@ -51,18 +52,6 @@ function init_token_form() {
     });
 }
 
-function esp32_ota_update_url(firmware_help) {
-    var request = new XMLHttpRequest();
-    request.open("POST", `${window.location.origin}/get/firmware`, true);
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.send(`type=firmware`);
-    request.addEventListener("load", () => {
-        firmware_input.placeholder = request.responseText;
-        default_firmware_url = request.responseText;
-        console.log(`firmware url: ${request.responseText}`);
-    });
-}
-
 function esp32_ota_update(type, url) {
     var request = new XMLHttpRequest();
     request.open("POST", `${window.location.origin}/ota/update`, true);
@@ -75,4 +64,90 @@ function esp32_token_update(token) {
     request.open("POST", `${window.location.origin}/set/data`, true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.send(`5=${token}`);
+}
+
+function get_github_json_url() {
+    var request = new XMLHttpRequest();
+    request.open("POST", `${window.location.origin}/get/githubjson`, true);
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    request.send();
+    request.addEventListener("load", () => {
+        let url = request.responseText;
+        get_github_json_data(url) 
+        console.log(`GitHub Json Url: ${url}`);
+    });
+}
+
+function get_github_json_data(url) {
+    var request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.setRequestHeader("Accept", "application/vnd.github.v3+json");
+    request.send();
+    request.addEventListener("load", () => {
+        let data = request.responseText;
+        console.log(data);
+        let last_ver = undefined;
+        try {
+            last_ver = JSON.parse(data)["tag_name"];
+        } catch(e) {
+            last_ver = undefined;
+            console.log("json error:", e);
+        }
+        get_esp_version(last_ver);
+        get_bin_url(JSON.parse(data));
+    });
+}
+
+function get_esp_version(last_ver) {
+    var request = new XMLHttpRequest();
+    request.open("POST", `${window.location.origin}/get/version`, true);
+    request.send();
+    request.addEventListener("load", () => {
+        let now_ver = request.responseText;
+        now_ver_span.innerText = now_ver;
+        if(last_ver === undefined) {
+            last_ver_span.innerText = "NULL";
+            document.getElementById('firmwareBt').disabled = true;
+            document.getElementById('d_firmwareBt').disabled = true;
+            now_ver_span.style.color = "gray";
+            last_ver_span.style.color = "gray";
+        } else {
+            last_ver_span.innerText = last_ver;
+            if(last_ver === now_ver) {
+                now_ver_span.style.color = "gray";
+                last_ver_span.style.color = "gray";
+                document.getElementById('d_firmwareBt').disabled = true;
+            } else {
+                now_ver_span.style.color = "orange";
+                last_ver_span.style.color = "red";
+                update_link.style.color = "red";
+            }
+        }
+    });
+}
+
+function get_bin_url(data) {
+    try {
+        let assets_list = data.assets;
+        let spiffs_bin_url = undefined;
+        let firmware_bin_url = undefined;
+
+        for(let i = 0; i < assets_list.length; i++) {
+            if(assets_list[i].name === "firmware.bin") {
+                firmware_bin_url = assets_list[i].browser_download_url;
+            }
+
+            if(assets_list[i].name === "spiffs.bin") {
+                spiffs_bin_url = assets_list[i].browser_download_url;
+            }
+        }    
+
+        console.log("firmware bin url:", firmware_bin_url);
+        console.log("spiffs bin url:", spiffs_bin_url);
+
+        default_firmware_url = firmware_bin_url;
+        document.getElementById('firmware_input').placeholder = default_firmware_url;
+    }catch(e) {
+        console.log("error:", e)
+    }
 }
