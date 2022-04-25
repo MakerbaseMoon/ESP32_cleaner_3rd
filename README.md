@@ -10,8 +10,7 @@ This is the cleaner project for maker.
 
 ```
 git clone https://github.com/Hsun1031/ESP32_cleaner_3rd.git
-git submodule --init
-git submodule update --recursive
+git submodule update --init --recursive
 ``` 
 
 ## project files (專案檔案)
