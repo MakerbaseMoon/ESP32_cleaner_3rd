@@ -167,25 +167,20 @@ function get_github_json_url() {
 function get_github_json_data(url) {
     var request = new XMLHttpRequest();
     request.open("GET", url, true);
+    request.setRequestHeader("Accept", "application/vnd.github.v3+json");
     request.send();
     request.addEventListener("load", () => {
-        data = request.responseText;
-        console.log(`GitHub Data: ${data}`);
-        let len = data.length;
-
-        for(let i = 0; i < len; i++) {
-            data = data.replace("\n", "");
-            data = data.replace(" ", "");
-        }
-
-        console.log(`GitHub Data: ${data}`);
-        let last_ver = NaN;
+        let data = request.responseText;
+        console.log(data);
+        let last_ver = undefined;
         try {
-            last_ver = parseInt(JSON.parse(data)["firmware"]["version"]);
+            last_ver = JSON.parse(data)["tag_name"];
         } catch(e) {
+            last_ver = undefined;
             console.log("json error:", e);
         }
         get_esp_version(last_ver);
+        get_bin_url(JSON.parse(data));
     });
 }
 
@@ -194,26 +189,48 @@ function get_esp_version(last_ver) {
     request.open("POST", `${window.location.origin}/get/version`, true);
     request.send();
     request.addEventListener("load", () => {
-        let now_ver = parseInt(request.responseText);
-        console.log(`ESP32 version: ${now_ver}`);
-        if(now_ver == last_ver) {
-            now_ver_span.innerText = `Now: ${request.responseText}.0`;
-            last_ver_span.innerText = `Last: ${last_ver}.0`;
+        let now_ver = request.responseText;
+        now_ver_span.innerText = now_ver;
+        if(last_ver === undefined) {
+            last_ver_span.innerText = "NULL";
+            document.getElementById('firmwareBt').disabled = true;
+            document.getElementById('d_firmwareBt').disabled = true;
             now_ver_span.style.color = "gray";
             last_ver_span.style.color = "gray";
         } else {
-            if(isNaN(last_ver)) {
-                now_ver_span.innerText = `Now: ${request.responseText}.0`;
-                last_ver_span.innerText = `Last: ${last_ver}`;
+            last_ver_span.innerText = last_ver;
+            if(last_ver === now_ver) {
                 now_ver_span.style.color = "gray";
-                last_ver_span.style.color = "red";
+                last_ver_span.style.color = "gray";
+                document.getElementById('d_firmwareBt').disabled = true;
             } else {
-                now_ver_span.innerText = `Now: ${request.responseText}.0`;
-                last_ver_span.innerText = `Last: ${last_ver}.0`;
                 now_ver_span.style.color = "orange";
                 last_ver_span.style.color = "red";
-                update_link.classList.add("link-danger");
+                update_link.style.color = "red";
             }
         }
     });
+}
+
+function get_bin_url(data) {
+    try {
+        let assets_list = data.assets;
+        let spiffs_bin_url = undefined;
+        let firmware_bin_url = undefined;
+
+        for(let i = 0; i < assets_list.length; i++) {
+            if(assets_list[i].name === "firmware.bin") {
+                firmware_bin_url = assets_list[i].browser_download_url;
+            }
+
+            if(assets_list[i].name === "spiffs.bin") {
+                spiffs_bin_url = assets_list[i].browser_download_url;
+            }
+        }
+        
+        console.log("firmware bin url:", firmware_bin_url);
+        console.log("spiffs bin url:", spiffs_bin_url);
+    }catch(e) {
+        console.log("error:", e)
+    }
 }

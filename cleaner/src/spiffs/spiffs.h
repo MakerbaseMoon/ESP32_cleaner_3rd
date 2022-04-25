@@ -2,6 +2,8 @@
 
 #include "SPIFFS.h"
 
+#include "conf/conf.h"
+
 bool spiffs_setup();
 
 int get_spiffs_version();

@@ -6,8 +6,11 @@ void wifi_setup(char* ssid, char* passwd, AsyncWebServer* server, AsyncWebSocket
     else
         wifi_sta_mode(ssid, passwd, wifi_mode, esp_ip_address);
 
-    if(!MDNS.begin(ESP32_MDNS_NAME))
+    if(!MDNS.begin(ESP32_MDNS_NAME)) {
+        #ifdef ESP32_CLEANER_SHOW_DEBUG
         Serial.printf("Error starting mDNS.\n");
+        #endif
+    }
     
     initWebServer(server, mode, url, ssid);
     initWebSocket(server, ws, mode);

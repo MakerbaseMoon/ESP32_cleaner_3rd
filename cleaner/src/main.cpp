@@ -19,43 +19,39 @@ AsyncWebServer server (80);    // create HTTP Object.
 AsyncWebSocket ws     ("/ws"); // create WebSocket Object.
 
 void setup() {
-    #ifdef ESP32_CLEANER_SHOW_DEBUG
     Serial.begin (115200); // Sets the data rate in bits per second (baud) for serial data transmission.
     Serial.printf("\n\n"); // Newline.
-    #endif
 
-    oled_setup  (&display);
-    eeprom_setup(&ssid, &passwd, &esp_mdns);
-    spiffs_setup();
-    motor_setup ();
-    fan_setup   ();
-    wifi_setup  (ssid, passwd, &server, &ws, &mode, &wifi_mode, &url, &esp_ip_address);
-    
-    Serial.printf("esp_ip_address: %s\n", esp_ip_address);
-    Serial.printf("esp_mdns:       %s\n", esp_mdns);
+    oled_setup  (&display);                  // SSD1306 OLED setup.
+    eeprom_setup(&ssid, &passwd, &esp_mdns); // ESP32 EEPROM setup.
+    spiffs_setup();                          // SPIFFS setup.
+    motor_setup ();                          // MX1508 Motor setup.
+    fan_setup   ();                          // Fan MOS module setup.
+
+    wifi_setup  (ssid, passwd, &server, &ws, &mode, &wifi_mode, &url, &esp_ip_address); // WiFi setup.
 
     check_cleaner_spiffs_version(&wifi_mode, &display); // check cleaner spiffs version.
     
-    auto_begin  ();
+    auto_begin  (); // Ready ro start auto mode.
 }
 
 void loop() {
     switch (mode) {
-        case 0:
+        case 0: // Auto Mode
             auto_mode   (&display, &wifi_mode, esp_ip_address, esp_mdns, &mode);
             break;
 
-        case 1:
+        case 1: // Control Mode
             control_mode(&display, &wifi_mode, esp_ip_address, esp_mdns);
             break;
 
-        case 2:
+        case 2: // Firmware Update Mode
             showUpdate(&display, NULL, NULL);
             update_firmware_mode(url);
             mode = 1;
             break;
 
-        case 3:
+        case 3: // SPIFFS Update Mode
             showUpdate(&display, NULL, NULL);
             update_spiffs_mode(url);
             mode = 1;
@@ -65,7 +61,7 @@ void loop() {
             break;
     }
 
-    ws.cleanupClients();
+    ws.cleanupClients(); // Clean websocket disconnect clients.
 
-    delay(30);
+    delay(30); // delay 0.03s
 }

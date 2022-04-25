@@ -1,8 +1,10 @@
 #include "spiffs/spiffs.h"
 
 bool spiffs_setup() {
-    if(!SPIFFS.begin()){ 
-        Serial.printf("An Error has occurred while mounting SPIFFS\n");  
+    if(!SPIFFS.begin()) {
+        #ifdef ESP32_CLEANER_SHOW_DEBUG
+        Serial.printf("An Error has occurred while mounting SPIFFS\n");
+        #endif
         return false;
     }
 
@@ -12,20 +14,24 @@ bool spiffs_setup() {
 int get_spiffs_version() {
     File file = SPIFFS.open("/version.txt");
 
-    if(!file){
+    if(!file) {
+        #ifdef ESP32_CLEANER_SHOW_DEBUG
         Serial.printf("Failed to open file for reading.\n");
+        #endif
         return -1;
     }
     
     char *_data = NULL;
     _data = (char *)malloc(10 * sizeof(char));
     if(_data == NULL) {
+        #ifdef ESP32_CLEANER_SHOW_DEBUG
         Serial.printf("Failed to calloc data.\n");
+        #endif
         return -1;
     }
 
     size_t i = 0;
-    while(file.available()){
+    while(file.available()) {
         *(_data + i++) = (char)file.read();
     }
     *(_data + i) = 0;

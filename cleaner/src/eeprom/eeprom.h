@@ -9,7 +9,7 @@
  * 175 ~ 199
  * 200 ~ 224
  * 225 ~ 249
- * 250 ~ 254
+ * 250 ~ 254 -> 250 isSpiffs update
  */
 
 #include <Arduino.h>
@@ -76,3 +76,10 @@ bool is_eeprom_data(int start);
 
 void show_eeprom_data(bool toChar);
 void clean_eeprom_data();
+
+/**
+ * eeprom_update.cpp
+ * 
+ */
+void    set_SPIFFS_update(uint8_t data); // 0 NO, 1 Yes
+uint8_t get_SPIFFS_update();

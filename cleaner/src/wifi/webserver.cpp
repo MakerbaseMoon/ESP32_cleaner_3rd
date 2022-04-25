@@ -26,15 +26,7 @@ void initWebServer(AsyncWebServer* server, int *mode, char** url, char* ssid) {
     });
 
     server->on("/get/version", HTTP_POST, [](AsyncWebServerRequest *request) {
-        char* ver = NULL;
-        ver = (char*)malloc( 3 * sizeof(char));
-        *(ver) = (char)(ESP32_CLEANER_FIRMWARE_VERSION + 48);
-        *(ver + 1) = 0;
-        if(ver == NULL){
-            request->send(200, "text/plain", "Error");
-            return;
-        }
-        request->send(200, "text/plain", ver);
+        request->send(200, "text/plain", ESP32_CLEANER_VERSION);
     });
 
     server->on("/get/wifi/ssid", HTTP_POST, [](AsyncWebServerRequest *request) {
@@ -67,7 +59,9 @@ void initWebServer(AsyncWebServer* server, int *mode, char** url, char* ssid) {
 
     server->on("/set/mode", HTTP_POST, [](AsyncWebServerRequest *request) {
         int change_mode = (int)*(request->getParam(0)->value().c_str()) - 48;
+        #ifdef ESP32_CLEANER_SHOW_DEBUG
         Serial.printf("ESP32 Cleaner Mode: %d\n", change_mode);
+        #endif
         if(change_mode == 0) {
             auto_begin();
             *_mode = 0;
@@ -155,10 +149,14 @@ int set_server_post_eeprom_data(AsyncWebServerRequest *request) {
     size_t params = request->params();
     int server_post_eeprom_data_error_code = 0;
 
+    #ifdef ESP32_CLEANER_SHOW_DEBUG
     Serial.printf("POST:\n");
+    #endif
     for (size_t i = 0; i < params; i++) {
         AsyncWebParameter *p = request->getParam(i);
+        #ifdef ESP32_CLEANER_SHOW_DEBUG
         Serial.printf("[%d]%s: %s %d\n", (int)*(p->name().c_str()), p->name().c_str(), p->value().c_str(), (int)*(p->value().c_str()));
+        #endif
 
         if(!(int)*(p->value().c_str()))
             continue;
@@ -274,5 +272,7 @@ void server_get_url(const char* url) {
         k++;
     } while (i);
     
+    #ifdef ESP32_CLEANER_SHOW_DEBUG
     Serial.printf("firmware url update: %s\n", *_url);
+    #endif
 }

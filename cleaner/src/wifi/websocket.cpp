@@ -15,7 +15,9 @@ void handleWebSocketMessage(void     *arg,
 
     if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
         str = (char*)data;
+        #ifdef ESP32_CLEANER_SHOW_DEBUG
         Serial.printf("websocket[%d]: \n%s\n", len, str);
+        #endif
         int value = (int)*(str) - 48;
         
         switch (value) {
@@ -48,16 +50,24 @@ void onEvent(AsyncWebSocket       *server,
              size_t                len) {
     switch (type) {
         case WS_EVT_CONNECT:
+            #ifdef ESP32_CLEANER_SHOW_DEBUG
             Serial.printf("WebSocket client #%u connected from %s\n", client->id(), client->remoteIP().toString().c_str());
+            #endif
             break;
+
         case WS_EVT_DISCONNECT:
+            #ifdef ESP32_CLEANER_SHOW_DEBUG
             Serial.printf("WebSocket client #%u disconnected\n", client->id());
+            #endif
             break;
+
         case WS_EVT_DATA:
             handleWebSocketMessage(arg, data, len, client->id());
             break;
+
         case WS_EVT_PONG:
         case WS_EVT_ERROR:
+        default:
             break;
     }
 }
