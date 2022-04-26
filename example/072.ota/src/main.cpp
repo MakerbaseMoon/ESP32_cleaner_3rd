@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <EEPROM.h>
 #include <ESP32GithubOTA.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
@@ -44,6 +45,8 @@ void setup() {
             int error = ota.firmwareOTA(p->value().c_str());
             Serial.printf("Error code: %d\n", error);
             if(error == 0) {
+                EEPROM.write(250, 1);
+                EEPROM.commit();
                 ESP.restart();
             }
         }
