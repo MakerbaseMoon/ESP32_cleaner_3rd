@@ -4,7 +4,7 @@ unsigned long auto_time = 0;
 int auto_image          = 0;
 
 void auto_mode(Adafruit_SSD1306* _display, int *wifi_mode, const char* esp_ip_address, const char* esp_mdns, int* mode) {
-    if(analogRead(RIGHT_IR) > 3700 || analogRead(LEFT_IR) > 3700) {
+    if(analogRead(RIGHT_IR) > RIGHT_IR_WARNING_DISTANCE || analogRead(LEFT_IR) > LEFT_IR_WARNING_DISTANCE) {
         motor_mode1();
         delay(300);
         motor_mode0();
@@ -14,14 +14,14 @@ void auto_mode(Adafruit_SSD1306* _display, int *wifi_mode, const char* esp_ip_ad
         if(analogRead(RIGHT_IR) > analogRead(LEFT_IR)) {
             motor_mode3();
             delay(200);
-            while(analogRead(RIGHT_IR) > 3800)
+            while(analogRead(RIGHT_IR) > RIGHT_IR_SAFE_DISTANCE)
                 motor_mode3();
             motor_mode0();
             delay(100);
         } else {
             motor_mode4();
             delay(300);
-            while(analogRead(LEFT_IR) > 3800)
+            while(analogRead(LEFT_IR_SAFE_DISTANCE) > 3800)
                 motor_mode4();
             motor_mode0();
             delay(100);
@@ -30,7 +30,7 @@ void auto_mode(Adafruit_SSD1306* _display, int *wifi_mode, const char* esp_ip_ad
             motor_mode1();
     }
 
-    if((millis() - auto_time) > 2000) {
+    if((millis() - auto_time) > IMAGE_CHANGE_TIME) {
         switch (auto_image) {
             case 0:
                 showLogo(_display, esp_ip_address, esp_mdns);

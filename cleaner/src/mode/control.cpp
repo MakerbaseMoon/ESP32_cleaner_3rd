@@ -4,7 +4,7 @@ unsigned long control_time = 0;
 int control_image = 0;
 
 void control_mode(Adafruit_SSD1306* _display, int *wifi_mode, const char* esp_ip_address, const char* esp_mdns) {
-    if((millis() - control_time) > 2000) {
+    if((millis() - control_time) > IMAGE_CHANGE_TIME) {
         switch (control_image) {
             case 0:
                 showLogo(_display, esp_ip_address, esp_mdns);
