@@ -3,7 +3,7 @@
 #include <SPIFFS.h>
 
 #include <WiFi.h>
-#include <mdns.h>
+#include <ESPmDNS.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 
@@ -41,7 +41,7 @@ void setup() {
 
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
         Serial.printf("Client to ESP32 server.\n");
-        request.send(SPIFFS, "/index.html", "text/html");
+        request->send(SPIFFS, "/index.html", "text/html");
     });
 
     server.begin();

@@ -1,17 +1,17 @@
 #include <Arduino.h>
 
-#define LEFT_WARNIMG_DISTANCE 2000
-#define RIGHT_WARNIMG_DISTANCE 2000
+#define LEFT_WARNIMG_DISTANCE 3000
+#define RIGHT_WARNIMG_DISTANCE 3000
 
-#define LEFT_SAFE_DISTANCE 2500
-#define RIGHT_SAFE_DISTANCE 2500
+#define LEFT_SAFE_DISTANCE 3200
+#define RIGHT_SAFE_DISTANCE 3200
 
 #define LEFT_IR 33 // left
 #define RIGHT_IR 32 // right
 
 #define FAN_PIN 17
 
-#define FAN_CHANNEL 1
+#define FAN_CHANNEL 0x05
 
 #define FAN_FREQ 5000
 #define FAN_RESOLUTION 8
@@ -55,8 +55,11 @@ void setup() {
     ledcWrite(MOTOR_CHANNEL_1, 0);
     ledcWrite(MOTOR_CHANNEL_2, 0);
     ledcWrite(MOTOR_CHANNEL_3, 0);
-    ledcWrite(MOTOR_CHANNEL_4, 0); 
-    ledcWrite(FAN_CHANNEL, 255); 
+    ledcWrite(MOTOR_CHANNEL_4, 0);
+    ledcWrite(FAN_CHANNEL, 255);
+
+    forward();
+
 }
 
 void loop() {
@@ -97,17 +100,17 @@ void loop() {
 }
 
 void forward() {
-    ledcWrite(MOTOR_CHANNEL_1, 0);
-    ledcWrite(MOTOR_CHANNEL_2, 255);
-    ledcWrite(MOTOR_CHANNEL_3, 0);
-    ledcWrite(MOTOR_CHANNEL_4, 255);
-}
-
-void backward() {
     ledcWrite(MOTOR_CHANNEL_1, 255);
     ledcWrite(MOTOR_CHANNEL_2, 0);
     ledcWrite(MOTOR_CHANNEL_3, 255);
     ledcWrite(MOTOR_CHANNEL_4, 0); 
+}
+
+void backward() {
+    ledcWrite(MOTOR_CHANNEL_1, 0);
+    ledcWrite(MOTOR_CHANNEL_2, 255);
+    ledcWrite(MOTOR_CHANNEL_3, 0);
+    ledcWrite(MOTOR_CHANNEL_4, 255);
 }
 
 void left() {

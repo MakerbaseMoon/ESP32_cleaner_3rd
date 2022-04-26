@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
 #include <WiFi.h>
-#include <mdns.h>
+#include <ESPmDNS.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 

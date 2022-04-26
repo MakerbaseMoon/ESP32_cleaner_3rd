@@ -9,7 +9,7 @@
 
 #define FAN_PIN 17
 
-#define FAN_CHANNEL 1
+#define FAN_CHANNEL 0x05
 
 #define FAN_FREQ 5000
 #define FAN_RESOLUTION 8
@@ -107,17 +107,17 @@ void loop() {
 }
 
 void forward() {
+   ledcWrite(MOTOR_CHANNEL_1, 255);
+    ledcWrite(MOTOR_CHANNEL_2, 0);
+    ledcWrite(MOTOR_CHANNEL_3, 255);
+    ledcWrite(MOTOR_CHANNEL_4, 0); 
+}
+
+void backward() {
     ledcWrite(MOTOR_CHANNEL_1, 0);
     ledcWrite(MOTOR_CHANNEL_2, 255);
     ledcWrite(MOTOR_CHANNEL_3, 0);
     ledcWrite(MOTOR_CHANNEL_4, 255);
-}
-
-void backward() {
-    ledcWrite(MOTOR_CHANNEL_1, 255);
-    ledcWrite(MOTOR_CHANNEL_2, 0);
-    ledcWrite(MOTOR_CHANNEL_3, 255);
-    ledcWrite(MOTOR_CHANNEL_4, 0); 
 }
 
 void left() {
