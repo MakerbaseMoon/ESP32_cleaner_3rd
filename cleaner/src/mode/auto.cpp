@@ -21,7 +21,7 @@ void auto_mode(Adafruit_SSD1306* _display, int *wifi_mode, const char* esp_ip_ad
         } else {
             motor_mode4();
             delay(300);
-            while(analogRead(LEFT_IR_SAFE_DISTANCE) > LEFT_IR_SAFE_DISTANCE)
+            while(analogRead(LEFT_IR) > LEFT_IR_SAFE_DISTANCE)
                 motor_mode4();
             motor_mode0();
             delay(100);
