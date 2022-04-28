@@ -1,6 +1,6 @@
 #include "eeprom/eeprom.h"
 
-bool eeprom_setup(char** ssid, char** passwd, char** esp_mdns) {
+bool eeprom_setup(char** ssid, char** passwd, char** esp_mdns, char** motor_pin) {
     if(!EEPROM.begin(512)) {                        // setup EEPROM.
         #ifdef ESP32_CLEANER_SHOW_DEBUG
         Serial.printf("Error to start EEPROM\n");   // EEPROM Error.
@@ -32,6 +32,11 @@ bool eeprom_setup(char** ssid, char** passwd, char** esp_mdns) {
                 *(*esp_mdns + i) = *(esp_default_mdns + i);
             }
         }
+    }
+
+    if(!get_motor_pin(motor_pin)) {
+        free(*motor_pin);
+        *motor_pin = NULL;
     }
 
     return true;

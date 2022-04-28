@@ -157,7 +157,7 @@ int set_server_post_eeprom_data(AsyncWebServerRequest *request) {
         if(!(int)*(p->value().c_str()))
             continue;
 
-        if((int)*(p->name().c_str()) == 48) {
+        if((int)*(p->name().c_str()) == 48) { // 0
             if(set_ssid(p->value().c_str())) {
                 #ifdef ESP32_CLEANER_SHOW_DEBUG
                 Serial.printf("set_ssid OK.\n");
@@ -170,7 +170,7 @@ int set_server_post_eeprom_data(AsyncWebServerRequest *request) {
             }
         }
         
-        if((int)*(p->name().c_str()) == 49) {
+        if((int)*(p->name().c_str()) == 49) { // 1
             if(set_passwd(p->value().c_str())) {
                 #ifdef ESP32_CLEANER_SHOW_DEBUG
                 Serial.printf("set_passwd OK.\n");
@@ -183,7 +183,7 @@ int set_server_post_eeprom_data(AsyncWebServerRequest *request) {
             }
         }
 
-        if((int)*(p->name().c_str()) == 50) {
+        if((int)*(p->name().c_str()) == 50) { // 2
             if(set_ap_ssid(p->value().c_str())) {
                 #ifdef ESP32_CLEANER_SHOW_DEBUG
                 Serial.printf("set_ap_ssid OK.\n");
@@ -196,7 +196,7 @@ int set_server_post_eeprom_data(AsyncWebServerRequest *request) {
             }
         }
 
-        if((int)*(p->name().c_str()) == 51) {
+        if((int)*(p->name().c_str()) == 51) { // 3
             if(set_ap_passwd(p->value().c_str())) {
                 #ifdef ESP32_CLEANER_SHOW_DEBUG
                 Serial.printf("set_ap_passwd OK.\n");
@@ -209,7 +209,7 @@ int set_server_post_eeprom_data(AsyncWebServerRequest *request) {
             }
         }
 
-        if((int)*(p->name().c_str()) == 52) {
+        if((int)*(p->name().c_str()) == 52) { // 4
             if(set_esp_mdns(p->value().c_str())) {
                 #ifdef ESP32_CLEANER_SHOW_DEBUG
                 Serial.printf("set_esp_mdns OK.\n");
@@ -222,7 +222,7 @@ int set_server_post_eeprom_data(AsyncWebServerRequest *request) {
             }
         }
 
-        if((int)*(p->name().c_str()) == 53) {
+        if((int)*(p->name().c_str()) == 53) { // 5
             if(set_github_token(p->value().c_str())) {
                 #ifdef ESP32_CLEANER_SHOW_DEBUG
                 Serial.printf("set_github_token OK.\n");
@@ -232,6 +232,19 @@ int set_server_post_eeprom_data(AsyncWebServerRequest *request) {
                 Serial.printf("set_github_token Error.\n");
                 #endif
                 server_post_eeprom_data_error_code += (1 << 5);
+            }
+        }
+
+        if((int)*(p->name().c_str()) == 54) { // 6
+            if(set_motor_pin(p->value().c_str())) {
+                #ifdef ESP32_CLEANER_SHOW_DEBUG
+                Serial.printf("set_motor_pin OK.\n");
+                #endif            
+            } else {
+                #ifdef ESP32_CLEANER_SHOW_DEBUG
+                Serial.printf("set_motor_pin Error.\n");
+                #endif
+                server_post_eeprom_data_error_code += (1 << 6);
             }
         }
     }

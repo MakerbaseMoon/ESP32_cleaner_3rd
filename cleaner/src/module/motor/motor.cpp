@@ -1,15 +1,41 @@
 #include "module/motor/motor.h"
 
-void motor_setup() {
+void motor_setup(char* motor_pin) {
     ledcSetup(MOTOR_CHANNEL_1, MOTOR_FREQ, MOTOR_RESOLUTION);
     ledcSetup(MOTOR_CHANNEL_2, MOTOR_FREQ, MOTOR_RESOLUTION);
     ledcSetup(MOTOR_CHANNEL_3, MOTOR_FREQ, MOTOR_RESOLUTION);
     ledcSetup(MOTOR_CHANNEL_4, MOTOR_FREQ, MOTOR_RESOLUTION);
 
-    ledcAttachPin(MOTOR_A01, MOTOR_CHANNEL_1);
-    ledcAttachPin(MOTOR_A02, MOTOR_CHANNEL_2);
-    ledcAttachPin(MOTOR_B01, MOTOR_CHANNEL_3);
-    ledcAttachPin(MOTOR_B02, MOTOR_CHANNEL_4);
+    if(motor_pin == NULL) {
+        ledcAttachPin(MOTOR_A01, MOTOR_CHANNEL_1);
+        ledcAttachPin(MOTOR_A02, MOTOR_CHANNEL_2);
+        ledcAttachPin(MOTOR_B01, MOTOR_CHANNEL_3);
+        ledcAttachPin(MOTOR_B02, MOTOR_CHANNEL_4);
+
+    } else if(*motor_pin == 48){
+        ledcAttachPin(MOTOR_A01, MOTOR_CHANNEL_1);
+        ledcAttachPin(MOTOR_A02, MOTOR_CHANNEL_2);
+        ledcAttachPin(MOTOR_B01, MOTOR_CHANNEL_3);
+        ledcAttachPin(MOTOR_B02, MOTOR_CHANNEL_4);
+
+    } else if(*motor_pin == 49){
+        ledcAttachPin(MOTOR_A02, MOTOR_CHANNEL_1);
+        ledcAttachPin(MOTOR_A01, MOTOR_CHANNEL_2);
+        ledcAttachPin(MOTOR_B01, MOTOR_CHANNEL_3);
+        ledcAttachPin(MOTOR_B02, MOTOR_CHANNEL_4);
+
+    } else if(*motor_pin == 50){
+        ledcAttachPin(MOTOR_A01, MOTOR_CHANNEL_1);
+        ledcAttachPin(MOTOR_A02, MOTOR_CHANNEL_2);
+        ledcAttachPin(MOTOR_B02, MOTOR_CHANNEL_3);
+        ledcAttachPin(MOTOR_B01, MOTOR_CHANNEL_4);
+
+    } else if(*motor_pin == 51){
+        ledcAttachPin(MOTOR_A02, MOTOR_CHANNEL_1);
+        ledcAttachPin(MOTOR_A01, MOTOR_CHANNEL_2);
+        ledcAttachPin(MOTOR_B02, MOTOR_CHANNEL_3);
+        ledcAttachPin(MOTOR_B01, MOTOR_CHANNEL_4);
+    }
 }
 
 void motor_mode0() {

@@ -13,6 +13,8 @@ char *json   = NULL;
 char *esp_ip_address = NULL;
 char *esp_mdns       = NULL;
 
+char*  motor_pin  = NULL;
+
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1); // create Adafruit SSD1306 Object.
 
 AsyncWebServer server (80);    // create HTTP Object.
@@ -22,11 +24,11 @@ void setup() {
     Serial.begin (115200); // Sets the data rate in bits per second (baud) for serial data transmission.
     Serial.printf("\n\n"); // Newline.
 
-    oled_setup  (&display);                  // SSD1306 OLED setup.
-    eeprom_setup(&ssid, &passwd, &esp_mdns); // ESP32 EEPROM setup.
-    spiffs_setup();                          // SPIFFS setup.
-    motor_setup ();                          // MX1508 Motor setup.
-    fan_setup   ();                          // Fan MOS module setup.
+    oled_setup  (&display);                              // SSD1306 OLED setup.
+    eeprom_setup(&ssid, &passwd, &esp_mdns, &motor_pin); // ESP32 EEPROM setup.
+    spiffs_setup();                                      // SPIFFS setup.
+    motor_setup (motor_pin);                            // MX1508 Motor setup.
+    fan_setup   ();                                      // Fan MOS module setup.
 
     wifi_setup  (ssid, passwd, &server, &ws, &mode, &wifi_mode, &url, &esp_ip_address); // WiFi setup.
 

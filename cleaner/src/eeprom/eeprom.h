@@ -5,7 +5,7 @@
  *  75 ~  99 -> AP Password
  * 100 ~ 124 -> ESP32 MDNS Name
  * 125 ~ 149 -> GitHub Token
- * 150 ~ 174
+ * 150 ~ 174 -> Motor Pin
  * 175 ~ 199
  * 200 ~ 224
  * 225 ~ 249
@@ -36,11 +36,14 @@
 #define EEPROM_TOKEN_START     125
 #define EEPROM_TOKEN_END       149
 
+#define EEPROM_MOTOR_PIN_START 150
+#define EEPROM_MOTOR_PIN_END   174
+
 /**
  * eeprom.cpp
  * 
  */
-bool eeprom_setup    (char** ssid, char** passwd, char** esp_mdns);
+bool eeprom_setup    (char** ssid, char** passwd, char** esp_mdns, char** motor_pin);
 
 bool set_esp_mdns    (const char*  mdns);
 bool set_github_token(const char*  token);
@@ -83,3 +86,10 @@ void clean_eeprom_data();
  */
 void    set_SPIFFS_update(uint8_t data); // 0 NO, 1 Yes
 uint8_t get_SPIFFS_update();
+
+/**
+ * eeprom_motor_pin.cpp
+ * 
+ */
+bool set_motor_pin(const char*  motor_pin);
+bool get_motor_pin(char** motor_pin);

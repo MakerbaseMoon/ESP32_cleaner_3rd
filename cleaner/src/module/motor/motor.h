@@ -22,7 +22,7 @@
 
 #define MOTOR_STOP 0
 
-void motor_setup();
+void motor_setup(char* motor_pin);
 
 void motor_mode0();
 void motor_mode1();

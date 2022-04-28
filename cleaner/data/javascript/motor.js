@@ -48,3 +48,10 @@ function init_motor_button() {
         });
     }
 }
+
+function motor_update(value) {
+    var request = new XMLHttpRequest();
+    request.open("POST", `${window.location.origin}/set/data`, true);
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    request.send(`6=${value}`);
+}
