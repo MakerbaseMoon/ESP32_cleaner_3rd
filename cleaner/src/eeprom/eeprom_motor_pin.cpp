@@ -1,7 +1,7 @@
 #include "eeprom/eeprom.h"
 
-bool set_motor_pin(const char*  motor_pin) {
-    set_eeprom_data(EEPROM_MOTOR_PIN_START, EEPROM_MOTOR_PIN_END, (uint8_t *)motor_pin);
+bool set_motor_pin(const char* motor_pin) {
+    return set_eeprom_data(EEPROM_MOTOR_PIN_START, EEPROM_MOTOR_PIN_END, (uint8_t *)motor_pin);
 }
 
 bool get_motor_pin(char** motor_pin) {

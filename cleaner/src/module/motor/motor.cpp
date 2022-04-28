@@ -12,11 +12,27 @@ void motor_setup(char* motor_pin) {
         ledcAttachPin(MOTOR_B01, MOTOR_CHANNEL_3);
         ledcAttachPin(MOTOR_B02, MOTOR_CHANNEL_4);
 
+        #ifdef ESP32_CLEANER_SHOW_DEBUG
+        Serial.printf("motor_pin: NULL\n");
+        Serial.printf("MOTOR_CHANNEL_1: %d\n", MOTOR_A01);
+        Serial.printf("MOTOR_CHANNEL_2: %d\n", MOTOR_A02);
+        Serial.printf("MOTOR_CHANNEL_3: %d\n", MOTOR_B01);
+        Serial.printf("MOTOR_CHANNEL_4: %d\n", MOTOR_B02);
+        #endif
+
     } else if(*motor_pin == 48){
         ledcAttachPin(MOTOR_A01, MOTOR_CHANNEL_1);
         ledcAttachPin(MOTOR_A02, MOTOR_CHANNEL_2);
         ledcAttachPin(MOTOR_B01, MOTOR_CHANNEL_3);
         ledcAttachPin(MOTOR_B02, MOTOR_CHANNEL_4);
+
+        #ifdef ESP32_CLEANER_SHOW_DEBUG
+        Serial.printf("motor_pin: 48\n");
+        Serial.printf("MOTOR_CHANNEL_1: %d\n", MOTOR_A01);
+        Serial.printf("MOTOR_CHANNEL_2: %d\n", MOTOR_A02);
+        Serial.printf("MOTOR_CHANNEL_3: %d\n", MOTOR_B01);
+        Serial.printf("MOTOR_CHANNEL_4: %d\n", MOTOR_B02);
+        #endif
 
     } else if(*motor_pin == 49){
         ledcAttachPin(MOTOR_A02, MOTOR_CHANNEL_1);
@@ -24,17 +40,41 @@ void motor_setup(char* motor_pin) {
         ledcAttachPin(MOTOR_B01, MOTOR_CHANNEL_3);
         ledcAttachPin(MOTOR_B02, MOTOR_CHANNEL_4);
 
+        #ifdef ESP32_CLEANER_SHOW_DEBUG
+        Serial.printf("motor_pin: 49\n");
+        Serial.printf("MOTOR_CHANNEL_1: %d\n", MOTOR_A02);
+        Serial.printf("MOTOR_CHANNEL_2: %d\n", MOTOR_A01);
+        Serial.printf("MOTOR_CHANNEL_3: %d\n", MOTOR_B01);
+        Serial.printf("MOTOR_CHANNEL_4: %d\n", MOTOR_B02);
+        #endif
+
     } else if(*motor_pin == 50){
         ledcAttachPin(MOTOR_A01, MOTOR_CHANNEL_1);
         ledcAttachPin(MOTOR_A02, MOTOR_CHANNEL_2);
         ledcAttachPin(MOTOR_B02, MOTOR_CHANNEL_3);
         ledcAttachPin(MOTOR_B01, MOTOR_CHANNEL_4);
 
+        #ifdef ESP32_CLEANER_SHOW_DEBUG
+        Serial.printf("motor_pin: 50\n");
+        Serial.printf("MOTOR_CHANNEL_1: %d\n", MOTOR_A01);
+        Serial.printf("MOTOR_CHANNEL_2: %d\n", MOTOR_A02);
+        Serial.printf("MOTOR_CHANNEL_3: %d\n", MOTOR_B02);
+        Serial.printf("MOTOR_CHANNEL_4: %d\n", MOTOR_B01);
+        #endif
+
     } else if(*motor_pin == 51){
         ledcAttachPin(MOTOR_A02, MOTOR_CHANNEL_1);
         ledcAttachPin(MOTOR_A01, MOTOR_CHANNEL_2);
         ledcAttachPin(MOTOR_B02, MOTOR_CHANNEL_3);
         ledcAttachPin(MOTOR_B01, MOTOR_CHANNEL_4);
+
+        #ifdef ESP32_CLEANER_SHOW_DEBUG
+        Serial.printf("motor_pin: 51\n");
+        Serial.printf("MOTOR_CHANNEL_1: %d\n", MOTOR_A02);
+        Serial.printf("MOTOR_CHANNEL_2: %d\n", MOTOR_A01);
+        Serial.printf("MOTOR_CHANNEL_3: %d\n", MOTOR_B02);
+        Serial.printf("MOTOR_CHANNEL_4: %d\n", MOTOR_B01);
+        #endif
     }
 }
 

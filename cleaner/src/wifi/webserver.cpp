@@ -1,13 +1,15 @@
 #include "wifi/wifi.h"
 
-int *  _mode = NULL;
-char** _url  = NULL;
-char*  _ssid = NULL;
+int *  _mode      = NULL;
+char** _url       = NULL;
+char*  _ssid      = NULL;
+char*  _motor_pin = NULL;
 
-void initWebServer(AsyncWebServer* server, int *mode, char** url, char* ssid) {
-    _mode = mode;
-    _url  = url;
-    _ssid = ssid;
+void initWebServer(AsyncWebServer* server, int *mode, char** url, char* ssid, char* motor_pin) {
+    _mode      = mode;
+    _url       = url;
+    _ssid      = ssid;
+    _motor_pin = motor_pin;
 
     server_on_http(server);
 
@@ -45,6 +47,10 @@ void initWebServer(AsyncWebServer* server, int *mode, char** url, char* ssid) {
 
     server->on("/get/githubjson", HTTP_POST, [](AsyncWebServerRequest *request) {
         request->send(200, "text/plain", GITHUB_VERSION_JSON_URL);
+    });
+
+    server->on("/get/motor", HTTP_POST, [](AsyncWebServerRequest *request) {
+        request->send(200, "text/plain", _motor_pin);
     });
 
     server->on("/ota/update", HTTP_POST, [](AsyncWebServerRequest *request) {

@@ -1,6 +1,6 @@
 #include "wifi/wifi.h"
 
-void wifi_setup(char* ssid, char* passwd, AsyncWebServer* server, AsyncWebSocket* ws, int *mode, int *wifi_mode, char** url, char** esp_ip_address) {
+void wifi_setup(char* ssid, char* passwd, AsyncWebServer* server, AsyncWebSocket* ws, int *mode, int *wifi_mode, char** url, char** esp_ip_address, char* motor_pin) {
     if(ssid == NULL)
         wifi_ap_mode(true, esp_ip_address);
     else
@@ -12,7 +12,7 @@ void wifi_setup(char* ssid, char* passwd, AsyncWebServer* server, AsyncWebSocket
         #endif
     }
     
-    initWebServer(server, mode, url, ssid);
+    initWebServer(server, mode, url, ssid, motor_pin);
     initWebSocket(server, ws, mode);
 
     server->begin();

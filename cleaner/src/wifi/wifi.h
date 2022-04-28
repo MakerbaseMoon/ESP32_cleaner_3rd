@@ -19,7 +19,7 @@
 #include "module/motor/motor.h"
 #include "mode/mode.h"
 
-void wifi_setup                 (char* ssid, char* passwd, AsyncWebServer* server, AsyncWebSocket* ws, int *mode, int *wifi_mode, char** url, char** esp_ip_address);
+void wifi_setup                 (char* ssid, char* passwd, AsyncWebServer* server, AsyncWebSocket* ws, int *mode, int *wifi_mode, char** url, char** esp_ip_address, char* motor_pin);
 
 void wifi_ap_mode               (bool isPasswd , char** esp_ip_address);
 void wifi_sta_mode              (char* ssid, char* passwd, int *wifi_mode, char** esp_ip_address);
@@ -28,7 +28,7 @@ void wifi_sta_connect           (char* ssid, char* passwd);
 
 bool get_esp32_ip_address       (const char* esp_ip_address, char** esp_ip_address_pointer);
 
-void initWebServer              (AsyncWebServer* server, int *mode, char** url, char* ssid);
+void initWebServer              (AsyncWebServer* server, int *mode, char** url, char* ssid, char* motor_pin);
 void server_on_http             (AsyncWebServer* server);
 int  set_server_post_eeprom_data(AsyncWebServerRequest *request);
 void server_set_update          (AsyncWebServerRequest *request);

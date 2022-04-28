@@ -30,7 +30,7 @@ void setup() {
     motor_setup (motor_pin);                            // MX1508 Motor setup.
     fan_setup   ();                                      // Fan MOS module setup.
 
-    wifi_setup  (ssid, passwd, &server, &ws, &mode, &wifi_mode, &url, &esp_ip_address); // WiFi setup.
+    wifi_setup  (ssid, passwd, &server, &ws, &mode, &wifi_mode, &url, &esp_ip_address, motor_pin); // WiFi setup.
 
     check_cleaner_spiffs_version(&wifi_mode, &display); // check cleaner spiffs version.
     

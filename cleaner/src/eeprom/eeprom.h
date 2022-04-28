@@ -39,6 +39,8 @@
 #define EEPROM_MOTOR_PIN_START 150
 #define EEPROM_MOTOR_PIN_END   174
 
+#define EEPROM_SPIFFS_UPDATE   250
+
 /**
  * eeprom.cpp
  * 
