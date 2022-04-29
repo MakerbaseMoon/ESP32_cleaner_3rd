@@ -20,7 +20,7 @@
 #define CLEANER_B02 12 // right
 
 #define SDA 21
-#define SCL  2
+#define SCL 22
 
 #define SCREEN_WIDTH       128
 #define SCREEN_HEIGHT       64
