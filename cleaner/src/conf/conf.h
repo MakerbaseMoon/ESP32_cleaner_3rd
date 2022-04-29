@@ -14,10 +14,10 @@
 #define FAN 17
 
 #define CLEANER_A01 13 // left
-#define CLEANER_A02  5 // left
+#define CLEANER_A02 15 // left
 
-#define CLEANER_B01  14 // right
-#define CLEANER_B02  12 // right
+#define CLEANER_B01 14 // right
+#define CLEANER_B02 12 // right
 
 #define SDA 21
 #define SCL  2
