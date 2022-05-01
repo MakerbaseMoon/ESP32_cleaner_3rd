@@ -115,12 +115,13 @@ function get_motor_data() {
     request.send();
     request.addEventListener("load", () => {
         let data = request.responseText;
+        let data_list;
         console.log("data:", data);
 
         if(data == "error") {
             data_list = [0, 255, 255, 255, 255];
         } else {
-            let data_list = data.split(",", 5);
+            data_list = data.split(",", 5);
         }
 
         try {
