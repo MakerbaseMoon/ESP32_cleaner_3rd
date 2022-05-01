@@ -58,5 +58,6 @@ void auto_mode(Adafruit_SSD1306* _display, int *wifi_mode, const char* esp_ip_ad
 
 void auto_begin() {
     fan_mode(3);
+    delay(2000);
     motor_mode1();
 }
