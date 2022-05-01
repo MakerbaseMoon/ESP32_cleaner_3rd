@@ -53,11 +53,11 @@ void loop() {
             mode = 1;
             break;
 
-        case 3: // SPIFFS Update Mode
-            showUpdate(&display, NULL, NULL);
-            update_spiffs_mode(url);
-            mode = 1;
-            break;
+        // case 3: // SPIFFS Update Mode
+        //     showUpdate(&display, NULL, NULL);
+        //     update_spiffs_mode(url);
+        //     mode = 1;
+        //     break;
 
         default:
             break;
