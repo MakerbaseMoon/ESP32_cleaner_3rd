@@ -67,6 +67,7 @@ function init_motor_button() {
 }
 
 function motor_update(value) {
+    setAllBut(true);
     let A01_value = document.getElementById('A01_value').value;
     let A02_value = document.getElementById('A02_value').value;
     let B01_value = document.getElementById('B01_value').value;
@@ -93,11 +94,18 @@ function motor_update(value) {
     B01_value = parseInt(B01_value);
     B02_value = parseInt(B02_value);
 
-    var request = new XMLHttpRequest();
-    request.open("POST", `${window.location.origin}/set/data`, true);
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    let byteArray = new Uint8Array([54, 61, value + 48, A01_value, A02_value, B01_value, B02_value]);
-    request.send(byteArray);
+    try {
+        let request = new XMLHttpRequest();
+        request.open("POST", `${window.location.origin}/set/data`, true);
+        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        let byteArray = new Uint8Array([54, 61, value + 48, A01_value, A02_value, B01_value, B02_value]);
+        request.send(byteArray);
+        request.addEventListener("load", () => {
+            window.location.reload();
+        });
+    } catch(e) {
+        setAllBut(false);
+    }
 }
 
 function get_motor_data() {
@@ -107,8 +115,13 @@ function get_motor_data() {
     request.send();
     request.addEventListener("load", () => {
         let data = request.responseText;
-        let data_list = data.split(",", 5);
         console.log("data:", data);
+
+        if(data == "error") {
+            data_list = [0, 255, 255, 255, 255];
+        } else {
+            let data_list = data.split(",", 5);
+        }
 
         try {
             let num = parseInt(data_list[0]);

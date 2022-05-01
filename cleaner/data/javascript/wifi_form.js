@@ -39,17 +39,27 @@ function esp32_ap_update(ssid, passwd) {
 }
 
 function esp32_wifi_update(ssid, passwd) {
-    var request = new XMLHttpRequest();
-    request.open("POST", `${window.location.origin}/set/data`, true);
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    if(ssid == "" && passwd == "");
+    setAllBut(true);
 
-    if(ssid != "" && passwd == "")
-        request.send(`0=${ssid}`);
-    if(ssid == "" && passwd != "")
-        request.send(`1=${passwd}`);
-    if(ssid != "" && passwd != "")
-        request.send(`0=${ssid}&1=${passwd}`);
+    try {
+        var request = new XMLHttpRequest();
+        request.open("POST", `${window.location.origin}/set/data`, true);
+        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        if(ssid == "" && passwd == "");
+
+        if(ssid != "" && passwd == "")
+            request.send(`0=${ssid}`);
+        if(ssid == "" && passwd != "")
+            request.send(`1=${passwd}`);
+        if(ssid != "" && passwd != "")
+            request.send(`0=${ssid}&1=${passwd}`);
+        
+        request.addEventListener("load", () => {
+            window.location.reload();
+        });
+    } catch(e) {
+        setAllBut(false);
+    }
 }
 
 function get_esp_ssid(wifi_ssid_input) {

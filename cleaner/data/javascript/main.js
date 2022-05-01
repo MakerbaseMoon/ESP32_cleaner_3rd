@@ -34,10 +34,18 @@ function onLoad() {
 }
 
 function clean_eeprom_data() {
-    var request = new XMLHttpRequest();
-    request.open("POST", `${window.location.origin}/clean/eeprom`, true);
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.send();
+    setAllBut(true);
+    try {
+        var request = new XMLHttpRequest();
+        request.open("POST", `${window.location.origin}/clean/eeprom`, true);
+        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        request.send();
+        request.addEventListener("load", () => {
+            window.location.reload();
+        });
+    } catch(e) {
+        setAllBut(false);
+    }
 }
 
 function change_mode() {
@@ -153,4 +161,12 @@ function set_div() {
         col1.classList.add("col-3");
         col3.classList.add("col-3");
     }
+}
+
+function setAllBut(isDisabled) {
+    document.getElementById('wifiBt').      disabled = isDisabled;
+    document.getElementById('motorBt').     disabled = isDisabled;
+    document.getElementById('cleanBt').     disabled = isDisabled;
+    document.getElementById('firmwareBt').  disabled = isDisabled;
+    document.getElementById('d_firmwareBt').disabled = isDisabled;
 }

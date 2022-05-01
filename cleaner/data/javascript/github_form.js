@@ -53,21 +53,29 @@ function init_token_form() {
 }
 
 function esp32_ota_update(type, url) {
-    var request = new XMLHttpRequest();
-    request.open("POST", `${window.location.origin}/ota/update`, true);
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.send(`${type}=${url}`);
+    setAllBut(true);
+    try {
+        let request = new XMLHttpRequest();
+        request.open("POST", `${window.location.origin}/ota/update`, true);
+        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        request.send(`${type}=${url}`);
+        request.addEventListener("load", () => {
+            window.location.reload();
+        });
+    } catch(e) {
+        setAllBut(false);
+    }
 }
 
 function esp32_token_update(token) {
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.open("POST", `${window.location.origin}/set/data`, true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.send(`5=${token}`);
 }
 
 function get_github_json_url() {
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.open("POST", `${window.location.origin}/get/githubjson`, true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.send();
@@ -79,7 +87,7 @@ function get_github_json_url() {
 }
 
 function get_github_json_data(url) {
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.setRequestHeader("Accept", "application/vnd.github.v3+json");
     request.send();

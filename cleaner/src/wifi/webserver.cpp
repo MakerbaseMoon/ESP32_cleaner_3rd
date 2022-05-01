@@ -22,6 +22,7 @@ void initWebServer(AsyncWebServer* server, int *mode, char** url, char* ssid, ch
             request->send(200, "text/plain", "Error");
         } else {
             request->send(200, "text/plain", "OK");
+            delay(1000);
             ESP.restart();
         }
     });
@@ -52,7 +53,7 @@ void initWebServer(AsyncWebServer* server, int *mode, char** url, char* ssid, ch
         char *motor_data  = NULL;
         motor_data = (char *)malloc(18 * sizeof(char));
 
-        if(motor_data == NULL) {
+        if(motor_data == NULL || _motor_pin == NULL) {
             request->send(200, "text/plain", "error");
 
         } else {
@@ -121,6 +122,7 @@ void initWebServer(AsyncWebServer* server, int *mode, char** url, char* ssid, ch
         #endif
         clean_eeprom_data();
         request->send(200, "text/plain", "OK");
+        delay(1000);
         ESP.restart();
     });
 
