@@ -15,10 +15,10 @@ function init_spiffs_form() {
 
 function init_firmware_form() {
     const firmware_input    = document.getElementById("firmware_input");
-    const firmware_help     = document.getElementById("firmware_help" );
+    // const firmware_help     = document.getElementById("firmware_help" );
     const firmwareBt        = document.getElementById("firmwareBt"    );
 
-    firmware_help.innerText = "GitHub Firmware URL.\n https://raw.githubusercontent.com/<name>/<repo>/<branch>/<file path>/<file name>";
+    // firmware_help.innerText = "GitHub Firmware URL.\n https://raw.githubusercontent.com/<name>/<repo>/<branch>/<file path>/<file name>";
 
     get_github_json_url();
 
@@ -88,7 +88,10 @@ function get_github_json_data(url) {
         console.log(data);
         let last_ver = undefined;
         try {
-            last_ver = JSON.parse(data)["tag_name"];
+            let data_json = JSON.parse(data)
+            last_ver = data_json["tag_name"];
+            document.getElementById('tag_title').innerText = data_json['name'];
+            document.getElementById('release_body').innerText = data_json['body'];
         } catch(e) {
             last_ver = undefined;
             console.log("json error:", e);
@@ -106,20 +109,24 @@ function get_esp_version(last_ver) {
         let now_ver = request.responseText;
         now_ver_span.innerText = now_ver;
         if(last_ver === undefined) {
-            last_ver_span.innerText = "NULL";
+            // last_ver_span.innerText = "NULL";
             document.getElementById('firmwareBt').disabled = true;
             document.getElementById('d_firmwareBt').disabled = true;
             now_ver_span.style.color = "gray";
-            last_ver_span.style.color = "gray";
+            // last_ver_span.style.color = "gray";
         } else {
-            last_ver_span.innerText = last_ver;
+            // last_ver_span.innerText = last_ver;
             if(last_ver === now_ver) {
+                document.getElementById('tag_title').style.color = "gray";
+                document.getElementById('tag_title').innerText = "Now: " + document.getElementById('tag_title').innerText;
                 now_ver_span.style.color = "gray";
-                last_ver_span.style.color = "gray";
+                // last_ver_span.style.color = "gray";
                 document.getElementById('d_firmwareBt').disabled = true;
             } else {
+                document.getElementById('tag_title').style.color = "red";
+                document.getElementById('tag_title').innerText = "New: " + document.getElementById('tag_title').innerText;
                 now_ver_span.style.color = "orange";
-                last_ver_span.style.color = "red";
+                // last_ver_span.style.color = "red";
                 update_link.style.color = "red";
             }
         }

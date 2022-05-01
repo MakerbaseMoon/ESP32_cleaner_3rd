@@ -41,13 +41,15 @@ function clean_eeprom_data() {
 }
 
 function change_mode() {
-    const modeBt    = document.getElementById("modeBt");
-    const mode_span = document.getElementById("mode_span");
-    const card_div  = document.getElementById("card_div");
+    const modeBt     = document.getElementById("modeBt");
+    const mode_span  = document.getElementById("mode_span");
+    const mode_span2 = document.getElementById("mode_span2");
+    const card_div   = document.getElementById("card_div");
 
     if(mode == 0) {
         console.log("[Mode] Auto -> Control");
-        mode_span.innerText = "Control";
+        mode_span2.innerText = "Control";
+        mode_span.innerText = "控制";
         card_div.innerHTML = "";
         card_div.appendChild(getControllerIcon(300, 300));
         modeBt.innerHTML = "";
@@ -66,7 +68,8 @@ function change_mode() {
 
         modeBt.innerHTML = "";
         modeBt.appendChild(getControllerIcon(60, 60));
-        mode_span.innerText = "Auto";
+        mode_span2.innerText = "Auto";
+        mode_span.innerText = "自動";
         esp32_mode_update(0);
         for(let i = 1; i < 5; i++) {
             document.getElementById(`motorBt${i}`).disabled = true;
