@@ -22,9 +22,8 @@ void initWebServer(AsyncWebServer* server, int *mode, char** url, char* ssid, ch
             request->send(200, "text/plain", "Error");
         } else {
             request->send(200, "text/plain", "OK");
+            ESP.restart();
         }
-
-        ESP.restart();
     });
 
     server->on("/get/version", HTTP_POST, [](AsyncWebServerRequest *request) {
@@ -50,7 +49,39 @@ void initWebServer(AsyncWebServer* server, int *mode, char** url, char* ssid, ch
     });
 
     server->on("/get/motor", HTTP_POST, [](AsyncWebServerRequest *request) {
-        request->send(200, "text/plain", _motor_pin);
+        char *motor_data  = NULL;
+        motor_data = (char *)malloc(18 * sizeof(char));
+
+        if(motor_data == NULL) {
+            request->send(200, "text/plain", "error");
+
+        } else {
+            *(motor_data +  0) = *_motor_pin;
+            *(motor_data +  1) = 44;
+            *(motor_data +  2) = (char)(((int)*(_motor_pin + 1) / 100) + 48);
+            *(motor_data +  3) = (char)((((int)*(_motor_pin + 1) - (int)*(_motor_pin + 1) / 100 * 100 ) / 10) + 48);
+            *(motor_data +  4) = (char)((((int)*(_motor_pin + 1) - (int)*(_motor_pin + 1) / 10 * 10 ) / 1) + 48);
+            *(motor_data +  5) = 44;
+            *(motor_data +  6) = (char)(((int)*(_motor_pin + 2) / 100) + 48);
+            *(motor_data +  7) = (char)((((int)*(_motor_pin + 2) - (int)*(_motor_pin + 2) / 100 * 100 ) / 10) + 48);
+            *(motor_data +  8) = (char)((((int)*(_motor_pin + 2) - (int)*(_motor_pin + 2) / 10 * 10 ) / 1) + 48);
+            *(motor_data +  9) = 44;
+            *(motor_data + 10) = (char)(((int)*(_motor_pin + 3) / 100) + 48);
+            *(motor_data + 11) = (char)((((int)*(_motor_pin + 3) - (int)*(_motor_pin + 3) / 100 * 100 ) / 10) + 48);
+            *(motor_data + 12) = (char)((((int)*(_motor_pin + 3) - (int)*(_motor_pin + 3) / 10 * 10 ) / 1) + 48);
+            *(motor_data + 13) = 44;
+            *(motor_data + 14) = (char)(((int)*(_motor_pin + 4) / 100) + 48);
+            *(motor_data + 15) = (char)((((int)*(_motor_pin + 4) - (int)*(_motor_pin + 4) / 100 * 100 ) / 10) + 48);
+            *(motor_data + 16) = (char)((((int)*(_motor_pin + 4) - (int)*(_motor_pin + 4) / 10 * 10 ) / 1) + 48);
+            *(motor_data + 17) = 0;
+
+            Serial.printf("data: %s\n", motor_data);
+
+            request->send(200, "text/plain", motor_data);
+        }
+
+        free(motor_data);
+        motor_data = NULL;
     });
 
     server->on("/ota/update", HTTP_POST, [](AsyncWebServerRequest *request) {
@@ -157,7 +188,12 @@ int set_server_post_eeprom_data(AsyncWebServerRequest *request) {
     for (size_t i = 0; i < params; i++) {
         AsyncWebParameter *p = request->getParam(i);
         #ifdef ESP32_CLEANER_SHOW_DEBUG
-        Serial.printf("[%d]%s: %s %d\n", (int)*(p->name().c_str()), p->name().c_str(), p->value().c_str(), (int)*(p->value().c_str()));
+        Serial.printf("[%d]%s: %s\n", (int)*(p->name().c_str()), p->name().c_str(), p->value().c_str());
+        size_t k = 0;
+        while((int)*(p->value().c_str() + k)) {
+            Serial.printf("%d ", (int)*(p->value().c_str() + k++));
+        }
+        Serial.printf("\n");
         #endif
 
         if(!(int)*(p->value().c_str()))

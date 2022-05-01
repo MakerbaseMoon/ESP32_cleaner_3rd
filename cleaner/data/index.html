@@ -142,30 +142,54 @@
                         <div class="d-grid gap-2">
                             <button id="wifiBt" class="btn btn-outline-primary">Update Wi-Fi STA (上傳並更新 STA Wi-Fi)</button>
                         </div>
+
                         <div class="row" style="height: 20px;"></div>
-                        <div class="row" style="text-align: center; font-size: 20px;">
-                            <div class="col-1"></div>
-                            <div class="col">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="motorACheck">
+
+                        <div class="row">
+                            <div class="col-auto">
+                                <label for="A01_value" class="col-form-label" style="text-align: right; font-size: 20px;">A01 PWM (左前校正)</label>
+                                <input type="text" class="form-control" style="background-color: rgba(217, 233, 248, 0.7);" id="A01_value" placeholder="255">
+                            </div>
+                            <div class="col-auto">
+                                <label for="A02_value" class="col-form-label" style="text-align: right; font-size: 20px;">A02 PWM (左後校正)</label>
+                                <input type="text" class="form-control" style="background-color: rgba(217, 233, 248, 0.7);" id="A02_value" placeholder="255">
+                            </div>
+                            <div class="col-auto">
+                                <div class="row" style="height: 30px;"></div>
+                                <div class="form-check" style="font-size: 20px;">
+                                    <input class="form-check-input" type="checkbox" id="motorACheck">
                                     <label class="form-check-label" for="motorACheck">
                                         Motor A Left (馬達左輪矯正)
                                     </label>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <label for="B01_value" class="col-form-label" style="text-align: right; font-size: 20px;">B01 PWM (右前校正)</label>
+                                <input type="text" class="form-control" style="background-color: rgba(217, 233, 248, 0.7);" id="B01_value" placeholder="255">
+                            </div>
+                            <div class="col-auto">
+                                <label for="B02_value" class="col-form-label" style="text-align: right; font-size: 20px;">B02 PWM (右後校正)</label>
+                                <input type="text" class="form-control" style="background-color: rgba(217, 233, 248, 0.7);" id="B02_value" placeholder="255">
+                            </div>
                             <div class="col">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="motorBCheck">
+                                <div class="row" style="height: 30px;"></div>
+                                <div class="form-check" style="font-size: 20px;">
+                                    <input class="form-check-input" type="checkbox" id="motorBCheck">
                                     <label class="form-check-label" for="motorBCheck">
                                         Motor B Right (馬達右輪矯正)
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-1"></div>
                         </div>
+
                         <div class="row" style="height: 20px;"></div>
                         <div class="d-grid gap-2">
                             <button id="motorBt" class="btn btn-outline-primary">Update Motor Pin Data (上傳並更新馬達矯正資料)</button>
+                        </div>
+                        <div class="row" style="height: 30px;"></div>
+                        <div class="d-grid gap-2">
                             <button id="cleanBt" class="btn btn-outline-danger">Clean EEPROM Data (清除所有ESP32資料)</button>
                         </div>
                         <!-- 
